@@ -1,0 +1,8 @@
+actions:
+  - name: "Deploy"
+    triggers:
+      push:
+        branches:
+          - "main"
+    bazel_commands:
+      - "run server:go_service --config=workflows"
