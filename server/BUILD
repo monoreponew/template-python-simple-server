@@ -1,27 +1,22 @@
-load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
-load("@io_bazel_rules_docker//go:image.bzl", "go_image")
+load("@rules_python//python:defs.bzl", "py_binary")
+load("@io_bazel_rules_docker//python3:image.bzl", "py3_image")
 load("@genrules//google_cloud_run:index.bzl", "deploy")
 
-go_library(
-    name = "lib",
-    srcs = ["main.go"],
-    importpath = "foo",
-    visibility = ["//visibility:private"],
-)
-
-go_binary(
-    name = "go",
-    embed = [":lib"],
+py_binary(
+    name = "server",
+    srcs = ["server.py"],
     visibility = ["//visibility:public"],
 )
 
-go_image(
-    name = "go_image",
-    binary = ":go",
+py3_image(
+    name = "server_image",
+    main = "server.py",
+    srcs = ["server.py"],
+    visibility = ["//visibility:public"],
 )
 
 deploy(
-    name = "go_service",
-    target = ":go_image",
-    port = "3333",
+    name = "python_service",
+    target = ":server_image",
+    port = "8000",
 )
