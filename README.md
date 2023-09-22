@@ -1,1 +1,1 @@
-# Simple Go Server Template
+# Simple Python Server Template
