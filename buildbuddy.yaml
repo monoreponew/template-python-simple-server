@@ -1,6 +1,7 @@
 actions:
   - name: "Build"
     container_image: ubuntu-20.04
+    user: buildbuddy
     triggers:
       push:
         branches:
@@ -12,6 +13,7 @@ actions:
         - "build //... --config=workflows"
   - name: "Deploy"
     container_image: ubuntu-20.04
+    user: buildbuddy
     triggers:
       push:
         branches:
